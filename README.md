@@ -189,8 +189,11 @@ Person.m:
 
 @implementation Person
 
-//Whenever other class's calls .name it will only return "Rozeri".
+//Whenever other class's calls .name it will only return "Rozeri". Except if it is already "Rozeri Dilar".
 -(NSString*) name{
+    if([_name isEqualToString:@"Rozeri Dilar"]){
+        return @"Rozeri Dilar";
+    }
     return @"Rozeri";
 }
 
@@ -204,4 +207,7 @@ Calling the above example:
 
     [rozeri setName:@"Some Other Name"];
     NSLog(@"Name: %@", rozeri.name); //Name will return "Rozeri".
+    
+    [rozeri setName:@"Rozeri Dilar"];
+    NSLog(@"Name: %@", rozeri.name); //Name will return "Rozeri Dilar".
 ```
