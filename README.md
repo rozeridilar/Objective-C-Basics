@@ -110,3 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 ```
+
+## Getters & Setters 
+
+When creating properties, if you do not want to set your property in every case you should declare them in .m files by overriding the set methods.
