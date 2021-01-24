@@ -211,3 +211,66 @@ Calling the above example:
     [rozeri setName:@"Rozeri Dilar"];
     NSLog(@"Name: %@", rozeri.name); //Name will return "Rozeri Dilar".
 ```
+
+
+## Pointers
+
+Pointer basically points a location in memory on your device.
+
+- You will use pointers when accessing class objects.(You can also reach primitive types's pointers too, but it is better to ease this process by only using pointers in class objects. Because in Objective-C you can use native types without dealing with pointers.)
+
+
+ViewController.h: 
+
+```obj-c
+#import <UIKit/UIKit.h>
+
+@interface ViewController : UIViewController
+
+@property (nonatomic, strong) NSString *name; // Use pointer when dealing with class objects.
+@property (nonatomic) int *pointerAge; // I do not need this, since I can reach native primitive types without dealing with pointers.
+@property (nonatomic) int age; // use like this.
+@property (nonatomic) NSInteger money; //NSInteger is just like a traditional int in C. It's a typedef. There are others like NSUInteger, CGFloat, etc. that all are synonyms for primitive types.
+@property (nonatomic) NSNumber *bankBalance;//NSNumber is useful when you need to stick a number into an NSArray or NSDictionary. The standard practice is to use these collections versus rolling your own; the drawback is that they can only contain Objective-C objects.
+
+@end
+```
+
+ViewController.m: 
+
+```obj-c
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    //To call name value, since it is a pointer we must allocate an instance in the memory.
+    self.name = [[NSString alloc] init];
+    self.name = @"";
+    
+    NSArray *myArray = [[NSArray alloc] init];
+    [myArray arrayByAddingObject:3];//will not compile.
+    [myArray arrayByAddingObject:[NSNumber numberWithInt:3]];//ok
+    [myArray arrayByAddingObject:self.bankBalance];//ok
+}
+
+
+@end
+```
+
+**Importance on ARC: When using pointers, you are creating instances by allocating from memory, so once you are done with it, you must release it from the memory. **
+
+NSInteger is just like a traditional int in C. It's a typedef. There are others like NSUInteger, CGFloat, etc. that all are synonyms for primitive types.
+
+NSNumber is useful when you need to stick a number into an NSArray or NSDictionary. The standard practice is to use these collections versus rolling your own; the drawback is that they can only contain Objective-C objects.
+
+NSNumber essentially wraps an int (or float, etc) into an Obj-C object (similar to C#/Java's concept of 'boxing' a primitive type) that can be added to an array.
+
+For performance reasons, if you can, use primitive types (like int, float, int[]). However, sometimes you cannot avoid NSArray/NSNumber, such as when you are reading or writing entries into a .plist file.
+
+https://stackoverflow.com/questions/1285098/whats-the-difference-between-nsnumber-and-nsinteger
+
+
+
+
