@@ -317,3 +317,43 @@ Example:
 ```
 - All @"" expressions are indeed immutable. They are replaced at compile time with instances of NSConstantString, which is a specialized subclass of NSString with a fixed memory layout. This also explains why NSString is the only object that can be initialized at compile time.
 
+https://stackoverflow.com/a/12327650/10616887
+
+
+Below are some NSString usage examples such as formatting string, appending, comparisons:
+
+
+```obj-c
+    NSString *lastName = @"Rozeri";
+    lastName = @"Dilar";
+    
+    NSLog(@"Last Name is: %@", lastName); // prints: Last Name is: Dilar
+    
+    //Conceting a String
+    NSString *firstName = @"Rozeri";
+    NSString *fullName = [NSString stringWithFormat:@"%@ Dilar", firstName];
+    NSLog(@"FullName: %@%@", fullName, @"."); // prints: FullName: Rozeri Dilar.
+    
+    //Lets remove the . in the NSLog above and add this to another variable.
+    NSString *lastSentence = [fullName stringByAppendingString:@"."];
+    NSLog(@"FullName: %@", lastSentence); // prints: FullName: Rozeri Dilar.
+    
+    //Comparisons:
+    NSString *str1 = @"Some Example";
+    NSString *str2 = @"Some Other Example";
+    NSString *str3 = @"some other example"; //lower case of str2
+
+    if (![str1 isEqualToString:str2]){
+        NSLog(@"str1 is equal to str2.");//This will run. --> Attention on --!-- in if statement.
+    }else{
+        NSLog(@"str1 is NOT equal to str2.");
+    }
+    
+    if ([str3.lowercaseString isEqualToString: str2.lowercaseString]){
+        NSLog(@"str3 is equal to str2 in LOWERCASE.");//will print
+    }
+    
+    if ([str2 caseInsensitiveCompare:str3] == NSOrderedSame){
+        NSLog(@"str3 is equal to str2 in LOWERCASE.");//will print
+    }
+```
