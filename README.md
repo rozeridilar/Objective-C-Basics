@@ -113,4 +113,95 @@ NS_ASSUME_NONNULL_END
 
 ## Getters & Setters 
 
-When creating properties, if you do not want to set your property in every case you should declare them in .m files by overriding the set methods.
+When creating properties, 
+
+- if you do not want to set your property in every case you should declare them explicitly in .m files by overriding the set methods like below.
+
+Person.h: 
+
+```obj-c
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface Person : NSObject
+
+@property(nonatomic) NSUInteger age;
+
+@end
+
+NS_ASSUME_NONNULL_END
+```
+
+Person.m: 
+
+```obj-c
+@implementation Person
+
+-(void) setAge:(NSUInteger)age{
+    //Here --age-- is the parameter that is the newValue in Swift.
+    // --_age-- is the instance variable that is our actual variable.
+    
+    //I will increase age only if the new age param is greater than the actual one. Otherwise, do not do anything.
+    if(age > _age){
+        _age = age;
+    }
+}
+@end
+```
+
+Calling the above example:
+
+```obj-c
+    Person *rozeri = [[Person alloc] init];
+    rozeri.age = 27;
+    
+    //Below I want to make the age lesser which is impossible.
+    [rozeri setAge:15];
+    NSLog(@"Age: %lu", rozeri.age); //Age will return 27.
+```
+
+
+- Lets say you want to return something explicitly when some user calls your property's getter,
+
+For below example, there is this person, NSObject instance, that only returns "Rozeri" as a name. Even the developer calls set method, it cannot be changed.
+
+Person.h: 
+
+```obj-c
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface Person : NSObject
+
+@property (nonatomic, strong) NSString *name;
+
+@end
+
+NS_ASSUME_NONNULL_END
+```
+
+Person.m: 
+
+```obj-c
+#import "Person.h"
+
+@implementation Person
+
+//Whenever other class's calls .name it will only return "Rozeri".
+-(NSString*) name{
+    return @"Rozeri";
+}
+
+@end
+```
+
+Calling the above example:
+
+```obj-c
+    Person *rozeri = [[Person alloc] init];
+
+    [rozeri setName:@"Some Other Name"];
+    NSLog(@"Name: %@", rozeri.name); //Name will return "Rozeri".
+```
