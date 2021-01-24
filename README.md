@@ -10,6 +10,16 @@ Cocoa Touch Class = .m + .h files.
 
 A class that has the definition of the methods.
 
+- **+** sign before adding methods declared that method is static.
+- **-** is the method that can be accessed via class instances. 
+
+Below is an example of NSString class's header file:
+
+```obj-c
++ (instancetype)localizedStringWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
+- (nullable instancetype)initWithCString:(const char *)nullTerminatedCString encoding:(NSStringEncoding)encoding;
+```
+
 ### Access Modifiers
 
 - If you want to show your property in public you should add your property in .h files, like example below:
@@ -273,4 +283,37 @@ https://stackoverflow.com/questions/1285098/whats-the-difference-between-nsnumbe
 
 
 
+## Objective-C Strings
+
+Lets dive into some definitions for Strings:
+
+- A **literal** is a value, which is immutable by definition. 
+
+- A **constant** is a read-only variable or pointer.
+
+Example:
+
+```obj-c
+ const int age = 27;
+ age = 25;//Cannot assign to variable 'age' with const-qualified type 'const int'
+```
+
+- A **string literal** is a expression like @"". The compiler will replace this with an instance of NSString.
+
+Example:
+
+```obj-c
+    NSString *name = @"Rozeri";
+    name = @"Dilar";
+    
+    NSLog(@"Name is: %@", name); // prints: Name is: Dilar
+```
+
+- A string **constant** is a read-only pointer to NSString.
+
+```obj-c
+    NSString *const firstName = @"Rozeri";
+    firstName = "Dilar";//Cannot assign to variable 'firstName' with const-qualified type 'NSString *const __strong'
+```
+- All @"" expressions are indeed immutable. They are replaced at compile time with instances of NSConstantString, which is a specialized subclass of NSString with a fixed memory layout. This also explains why NSString is the only object that can be initialized at compile time.
 
