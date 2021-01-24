@@ -259,15 +259,15 @@ ViewController.m:
 @end
 ```
 
-**Importance on ARC: When using pointers, you are creating instances by allocating from memory, so once you are done with it, you must release it from the memory. **
+**Importance on ARC:** When using pointers, you are creating instances by allocating from memory, so once you are done with it, you must release it from the memory. 
 
-NSInteger is just like a traditional int in C. It's a typedef. There are others like NSUInteger, CGFloat, etc. that all are synonyms for primitive types.
+- NSInteger is just like a traditional int in C. It's a typedef. There are others like NSUInteger, CGFloat, etc. that all are synonyms for primitive types.
 
-NSNumber is useful when you need to stick a number into an NSArray or NSDictionary. The standard practice is to use these collections versus rolling your own; the drawback is that they can only contain Objective-C objects.
+- NSNumber is useful when you need to stick a number into an NSArray or NSDictionary. The standard practice is to use these collections versus rolling your own; the drawback is that they can only contain Objective-C objects.
 
-NSNumber essentially wraps an int (or float, etc) into an Obj-C object (similar to C#/Java's concept of 'boxing' a primitive type) that can be added to an array.
+- NSNumber essentially wraps an int (or float, etc) into an Obj-C object (similar to C#/Java's concept of 'boxing' a primitive type) that can be added to an array.
 
-For performance reasons, if you can, use primitive types (like int, float, int[]). However, sometimes you cannot avoid NSArray/NSNumber, such as when you are reading or writing entries into a .plist file.
+- For performance reasons, if you can, use primitive types (like int, float, int[]). However, sometimes you cannot avoid NSArray/NSNumber, such as when you are reading or writing entries into a .plist file.
 
 https://stackoverflow.com/questions/1285098/whats-the-difference-between-nsnumber-and-nsinteger
 
