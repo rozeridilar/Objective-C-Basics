@@ -1,5 +1,7 @@
 # Objective-C-Basics
 
+Belows are some notes from objc.
+
 Cocoa Touch Class = .m + .h files.
 
 - ViewController.m -> implementation file
