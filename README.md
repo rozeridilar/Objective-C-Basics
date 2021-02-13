@@ -359,3 +359,22 @@ Below are some NSString usage examples such as formatting string, appending, com
         NSLog(@"str3 is equal to str2 in LOWERCASE.");//will print
     }
 ```
+
+## Atomic & Non-Atomic Properties
+atomic will ALWAYS guarantee
+
+If two different people want to read and write at the same time, your paper won't just burn! --> Your application will never crash, even in a race condition.
+If one person is trying to write and has only written 4 of the 8 letters to write, then no can read in the middle, the reading can only be done when all 8 letters is written --> No read(get) will happen on 'a thread that is still writing', i.e. if there are 8 bytes to bytes to be written, and only 4 bytes are written——up to that moment, you are not allowed to read from it. But since I said it won't crash then it would read from the value of an autoreleased object.
+If before writing you have erased that which was previously written on paper and then someone wants to read you can still read. How? You will be reading from something similar to Mac OS Trash bin ( as Trash bin is not still 100% erased...it's in a limbo) ---> If ThreadA is to read while ThreadB has already deallocated to write, you would get a value from either the final fully written value by ThreadB or get something from autorelease pool.
+Retain counts are the way in which memory is managed in Objective-C. When you create an object, it has a retain count of 1. When you send an object a retain message, its retain count is incremented by 1. When you send an object a release message, its retain count is decremented by 1. When you send an object an autorelease message, its retain count is decremented by 1 at some stage in the future. If an objectʼs retain count is reduced to 0, it is deallocated.
+
+Atomic doesn't guarantee thread safety, though it's useful for achieving thread safety. Thread Safety is relative to how you write your code/ which thread queue you are reading/writing from. It only guarantees non-crashable multithreading.
+
+nonatomic
+
+Since there is no such thing like Mac OS Trash Bin, then nobody cares whether or not you always get a value (<-- This could potentially lead to a crash), nor anybody cares if someone tries to read halfway through your writing (although halfway writing in memory is very different from halfway writing on paper, on memory it could give you a crazy stupid value from before, while on paper you only see half of what's been written) --> Doesn't guarantee to not crash, because it doesn't use autorelease mechanism.
+Doesn't guarantee full written values to be read!
+Is faster than atomic
+
+
+https://stackoverflow.com/a/36920240/10616887
