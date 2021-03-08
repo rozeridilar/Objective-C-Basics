@@ -41,9 +41,9 @@ Below is an example of NSString class's header file:
 @end
 ```
 
--If you want your property inside of the class and not available outside of the class you should implement it in .m file like below:
+- If you want your property inside of the class and not available outside of the class you should implement it in .m file like below:
 
-**ViewController.m file**
+**ViewController.m file:**
 
 ```obj-c
 
@@ -93,7 +93,7 @@ Has the implementation of the methods.
 
 ### Importing other files
 
-Unlike swift obj-C requires imports to reach other classes. To import another obj-c class in your file you should add that classes .h file into your .m file. For further explanination see how ViewController.m imported Person file.
+Unlike swift obj-C requires imports to reach other classes. To import another obj-c class in your file you should add that classes .h file into your .m file. For further explanation see how ViewController.m imported Person file.
 
 ## Proporties & Instance Variables
 
@@ -145,7 +145,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 ```
 
-Person.m: 
+**Person.m:** 
 
 ```obj-c
 @implementation Person
@@ -178,7 +178,7 @@ Calling the above example:
 
 For below example, there is this person, NSObject instance, that only returns "Rozeri" as a name. Even the developer calls set method, it cannot be changed.
 
-Person.h: 
+**Person.h:** 
 
 ```obj-c
 #import <Foundation/Foundation.h>
@@ -194,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 ```
 
-Person.m: 
+**Person.m: **
 
 ```obj-c
 #import "Person.h"
@@ -232,7 +232,7 @@ Pointer basically points a location in memory on your device.
 - You will use pointers when accessing class objects.(You can also reach primitive types's pointers too, but it is better to ease this process by only using pointers in class objects. Because in Objective-C you can use native types without dealing with pointers.)
 
 
-ViewController.h: 
+**ViewController.h:**
 
 ```obj-c
 #import <UIKit/UIKit.h>
@@ -248,7 +248,7 @@ ViewController.h:
 @end
 ```
 
-ViewController.m: 
+**ViewController.m:**
 
 ```obj-c
 @implementation ViewController
@@ -271,7 +271,7 @@ ViewController.m:
 @end
 ```
 
-**Importance on ARC:** When using pointers, you are creating instances by allocating from memory, so once you are done with it, you must release it from the memory. 
+**Importance on ARC:** When using pointers, you are creating instances via allocating from memory, so once you are done with it, you must release it from the memory. 
 
 - NSInteger is just like a traditional int in C. It's a typedef. There are others like NSUInteger, CGFloat, etc. that all are synonyms for primitive types.
 
@@ -360,21 +360,29 @@ Below are some NSString usage examples such as formatting string, appending, com
     }
 ```
 
-## Atomic & Non-Atomic Properties
-atomic will ALWAYS guarantee
+<!-- wp:heading -->
+<h2>Atomic &amp; Non-Atomic Properties</h2>
+<!-- /wp:heading -->
 
-If two different people want to read and write at the same time, your paper won't just burn! --> Your application will never crash, even in a race condition.
-If one person is trying to write and has only written 4 of the 8 letters to write, then no can read in the middle, the reading can only be done when all 8 letters is written --> No read(get) will happen on 'a thread that is still writing', i.e. if there are 8 bytes to bytes to be written, and only 4 bytes are written——up to that moment, you are not allowed to read from it. But since I said it won't crash then it would read from the value of an autoreleased object.
-If before writing you have erased that which was previously written on paper and then someone wants to read you can still read. How? You will be reading from something similar to Mac OS Trash bin ( as Trash bin is not still 100% erased...it's in a limbo) ---> If ThreadA is to read while ThreadB has already deallocated to write, you would get a value from either the final fully written value by ThreadB or get something from autorelease pool.
-Retain counts are the way in which memory is managed in Objective-C. When you create an object, it has a retain count of 1. When you send an object a retain message, its retain count is incremented by 1. When you send an object a release message, its retain count is decremented by 1. When you send an object an autorelease message, its retain count is decremented by 1 at some stage in the future. If an objectʼs retain count is reduced to 0, it is deallocated.
+<!-- wp:paragraph -->
+<p><strong>atomic will ALWAYS guarantee</strong></p>
+<!-- /wp:paragraph -->
 
-Atomic doesn't guarantee thread safety, though it's useful for achieving thread safety. Thread Safety is relative to how you write your code/ which thread queue you are reading/writing from. It only guarantees non-crashable multithreading.
+<!-- wp:list -->
+<ul><li>If two different people want to read and write at the same time, your paper won't just burn! --> Your application will never crash, even in a race condition.</li><li> If one person is trying to write and has only written 4 of the 8 letters to write, then no can read in the middle, the reading can only be done when all 8 letters is written --> No read(get) will happen on 'a thread that is still writing', i.e. if there are 8 bytes to bytes to be written, and only 4 bytes are written——up to that moment, you are not allowed to read from it. But since I said it won't crash then it would read from the value of an autoreleased object.</li><li>If before writing you have erased that which was previously written on paper and then someone wants to read you can still read. How? You will be reading from something similar to Mac OS Trash bin ( as Trash bin is not still 100% erased…it's in a limbo) ---> If ThreadA is to read while ThreadB has already deallocated to write, you would get a value from either the final fully written value by ThreadB or get something from autorelease pool.</li><li>Retain counts are the way in which memory is managed in Objective-C. When you create an object, it has a retain count of 1. When you send an object a retain message, its retain count is incremented by 1. When you send an object a release message, its retain count is decremented by 1. When you send an object an autorelease message, its retain count is decremented by 1 at some stage in the future. If an objectʼs retain count is reduced to 0, it is deallocated.</li></ul>
+<!-- /wp:list -->
 
-nonatomic
+<!-- wp:paragraph -->
+<p>Atomic doesn't guarantee thread safety, though it's useful for achieving thread safety. Thread Safety is relative to how you write your code/ which thread queue you are reading/writing from. It only guarantees non - crushable multithreading.</p>
+<!-- /wp:paragraph -->
 
-Since there is no such thing like Mac OS Trash Bin, then nobody cares whether or not you always get a value (<-- This could potentially lead to a crash), nor anybody cares if someone tries to read halfway through your writing (although halfway writing in memory is very different from halfway writing on paper, on memory it could give you a crazy stupid value from before, while on paper you only see half of what's been written) --> Doesn't guarantee to not crash, because it doesn't use autorelease mechanism.
-Doesn't guarantee full written values to be read!
-Is faster than atomic
+<!-- wp:paragraph -->
+<p><strong>nonatomic</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Since there is no such thing like Mac OS Trash Bin, then nobody cares whether or not you always get a value (&lt;-- This could potentially lead to a crash), nor anybody cares if someone tries to read halfway through your writing (although halfway writing in memory is very different from halfway writing on paper, on memory it could give you a crazy stupid value from before, while on paper you only see half of what's been written) --> Doesn't guarantee to not crash, because it doesn't use autorelease mechanism.</li><li>Doesn't guarantee full written values to be read!</li><li>Is faster than atomic</li></ul>
+<!-- /wp:list -->
 
 
 https://stackoverflow.com/a/36920240/10616887
