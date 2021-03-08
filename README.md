@@ -378,3 +378,6 @@ Is faster than atomic
 
 
 https://stackoverflow.com/a/36920240/10616887
+
+
+----
